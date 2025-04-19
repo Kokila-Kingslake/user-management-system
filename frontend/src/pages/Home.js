@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 export default function Home() {
   const [users, setUsers] = useState([]);
 
-  //const { id } = useParams();
 
   useEffect(() => {
     loadUsers();
