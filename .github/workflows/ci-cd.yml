@@ -13,6 +13,20 @@ jobs:
     name: Build and Test Backend
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: yourdbname
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -22,7 +36,7 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
-          
+
       - name: Grant Execute Permission to Maven Wrapper
         run: chmod +x ./backend/mvnw
 
@@ -36,7 +50,12 @@ jobs:
 
       - name: Build and Test Backend
         working-directory: backend
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/yourdbname
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: root
         run: ./mvnw clean install
+
 
   frontend:
     name: Build and Test Frontend
