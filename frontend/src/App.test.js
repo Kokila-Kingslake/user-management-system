@@ -1,8 +1,9 @@
+// filepath: src/App.test.js
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders User Management System link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/User Management System/i);
   expect(linkElement).toBeInTheDocument();
 });
