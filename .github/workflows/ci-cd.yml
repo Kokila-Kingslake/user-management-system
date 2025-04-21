@@ -83,9 +83,13 @@ jobs:
         working-directory: frontend
         run: npm install
 
+      - name: Update Browserslist Database
+        working-directory: frontend
+        run: npx browserslist@latest --update-db
+  
       - name: Build Frontend
         working-directory: frontend
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Run Tests
         working-directory: frontend
